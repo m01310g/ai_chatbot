@@ -28,8 +28,9 @@ restaurant_df = pd.concat([restaurant_file1, restaurant_file2], axis=0)
 restaurant_df = restaurant_df[['영업상태명', '사업장명', '소재지전체주소', '좌표정보(x)', '좌표정보(y)']]
 
 # 필요없는 데이터(폐업 점포) 제거
-# restaurant_df = restaurant_df.drop(restaurant_df[restaurant_df['영업상태명'] == '폐업'].index, inplace=True)
-# restaurant_df = restaurant_df.drop(restaurant_df[restaurant_df['영업상태명'] == '취소/말소/만료/정지/중지'].index, inplace=True)
+restaurant_df.drop(restaurant_df[restaurant_df['영업상태명'] == '폐업'].index, inplace=True)
+restaurant_df.drop(restaurant_df[restaurant_df['영업상태명'] == '취소/말소/만료/정지/중지'].index, inplace=True)
+
 
 # 데이터 결측치 제거
 restaurant_df = restaurant_df.dropna()
@@ -49,8 +50,8 @@ restaurant_df['경도'] = result[:, 0]
 restaurant_df['위도'] = result[:, 1]
 
 # 좌표정보 열 삭제
-# restaurant_df = restaurant_df.drop('좌표정보(x)', axis=1, inplace=True)
-# restaurant_df = restaurant_df.drop('좌표정보(y)', axis=1, inplace=True)
+restaurant_df.drop('좌표정보(x)', axis=1, inplace=True)
+restaurant_df.drop('좌표정보(y)', axis=1, inplace=True)
 
 # 시도, 시군구, 읍면동 데이터 입력한 열 생성
 restaurant_df['지역'] = restaurant_df['소재지전체주소'].apply(lambda x: x.split()[0:3])
@@ -59,13 +60,7 @@ region = restaurant_df['소재지전체주소'].apply(lambda x: x.split()[0:3])
 
 region = region.tolist()
 
-# for i in range(len(region)):
-#     if len(region[i]) != 3:
-#         del region[i]
-
-for i in range(len(region)):
-    restaurant_df['시도'] = region[i][0]
-print(restaurant_df['시도'])
+restaurant_df.to_csv('E:/ai_chatbot/변형데이터/RestaurantData.csv')
 
 # for i in range(len(region)):
 #     restaurant_df['시도'] = region[i][0]
