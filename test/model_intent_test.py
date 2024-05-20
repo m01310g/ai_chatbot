@@ -11,7 +11,7 @@ p = Preprocess(word2index_dic='E:/ai_chatbot/train_tools/dict/chatbot_dict.bin',
 # intent = IntentModel(model_name='E:/ai_chatbot/models/intent/intent_structure.json', weights_name='E:/ai_chatbot/models/intent/intent_weights.weights.h5', preprocess=p)
 intent = IntentModel(model_name='E:/ai_chatbot/models/intent/intent_model.h5', preprocess=p)
 
-query = "대구 식당 좀 추천해줘"
+query = "부산의 관광지를 보여줘"
 predict = intent.predict_class(query)
 predict_label = intent.label[predict]
 print("=" * 30)
