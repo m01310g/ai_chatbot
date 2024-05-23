@@ -62,7 +62,7 @@ lstm2 = LSTM(128, return_sequences=False)(lstm)  # 두 번째 LSTM 레이어
 
 hidden = Dense(128, activation=tf.nn.relu)(lstm2)  # lstm2를 연결
 dropout_hidden = Dropout(rate=dropout_prob)(hidden)
-predictions = Dense(3, activation="softmax")(dropout_hidden)
+predictions = Dense(4, activation="softmax")(dropout_hidden)
 
 # RNN(LSTM) 모델 생성
 model = Model(inputs=input_layer, outputs=predictions)

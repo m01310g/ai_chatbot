@@ -1,3 +1,6 @@
+import sys
+sys.path.append('E:/ai_chatbot/')
+
 from flask import Flask, request, jsonify
 
 from models.intent.IntentModel import IntentModel

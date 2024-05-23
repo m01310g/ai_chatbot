@@ -27,12 +27,13 @@ total.to_csv('E:/ai_chatbot/변형데이터/통합본데이터.csv', index=False
 restaurant = []
 cafe = []
 tour = []
+travel = []
 etc = []
-# 의도 분류 데이터 필요시 추가 생성 예정
 
 keywords_restaurant = ['밥', '음식점', '식당', '맛집', '음식', '식사', '아침', '점심', '저녁', '밥집', '식사']  # 식당 키워드 리스트
 keywords_cafe = ['빵', '카페', '커피', '디저트', '음료', '케이크']  # 카페 키워드 리스트
 keywords_tour = ['관광', '장소', '명소', '여행지']  # 관광지 키워드 리스트
+keywords_travel = ['여행', '계획', '플랜', '일정', '경로'] # 여행 키워드 리스트
 
 for i in all_data:
     if any(keyword in i for keyword in keywords_restaurant):
@@ -41,6 +42,8 @@ for i in all_data:
         cafe.append(i)
     elif any(keyword in i for keyword in keywords_tour):
         tour.append(i)
+    elif any(keyword in i for keyword in keywords_travel):
+        travel.append(i)
     else:
         etc.append(i)
 
@@ -56,8 +59,12 @@ tour_label = []
 for _ in range(len(tour)):
     tour_label.append(2)
 
-train_df = pd.DataFrame({'text' : restaurant+cafe+tour,
-                         'label': restaurant_label+cafe_label+tour_label})
+travel_label = []
+for _ in range(len(travel)):
+    travel_label.append(3)
+
+train_df = pd.DataFrame({'text' : restaurant+cafe+tour+travel,
+                         'label': restaurant_label+cafe_label+tour_label+travel_label})
 
 
 train_df.reset_index(drop=True, inplace=True)

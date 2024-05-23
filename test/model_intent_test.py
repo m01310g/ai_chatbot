@@ -19,7 +19,7 @@ print(query)
 print("의도 예측 클래스: ", predict)
 print("의도 예측 레이블: ", predict_label)
 
-query = "인천에서 케이크 먹고 싶어"
+query = ("부산 여행 일정 좀 알려줘")
 predict = intent.predict_class(query)
 predict_label = intent.label[predict]
 print("=" * 30)
