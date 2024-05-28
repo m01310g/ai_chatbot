@@ -7,7 +7,7 @@ from util.Preprocess import Preprocess
 class IntentModel:
     def __init__(self, model_name, preprocess):
         # 의도 클래스별 레이블
-        self.label = {0: '식당', 1: '카페', 2: '관광지', 3: '계획'}
+        self.label = {0: "자연", 1: "교육", 2: "스포츠", 3: "쇼핑"}
 
         # 의도 분류 모델 불러오기
         self.model = load_model(model_name, compile=False)

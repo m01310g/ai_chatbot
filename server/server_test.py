@@ -15,6 +15,42 @@ import json
 host = "127.0.0.1"
 port = 5050
 
+def receive_full_response(sock):
+    buffer = b''
+    while True:
+        try:
+            data = sock.recv(2048)
+            if not data:
+                break
+            buffer += data
+        except socket.timeout:
+            break
+    try:
+        decoded_buffer = buffer.decode('utf-8')
+        return json.loads(decoded_buffer)
+    except (json.JSONDecodeError, UnicodeError):
+        print("failed to decode response")
+        return None
+        #     decoded_buffer = buffer.decode('utf-8')
+        #     return json.loads(decoded_buffer)
+        # except json.JSONDecodeError as e:
+        #     print("Received raw data: ", buffer)
+        #     print(f"UnicodeDecodeError: {e}")
+        #     return {'Response': 'Error decoding JSON'}
+        # data = sock.recv(2048)
+        # if not data:
+        #     break
+        # buffer += data
+        # try:
+        #     return json.loads(buffer.decode('utf-8'))
+        # except json.JSONDecodeError:
+        #     # JSON 데이터가 완전하지 않으면 계속 수신
+        #     continue
+        # except UnicodeError as e:
+        #     print("Received raw data: ", buffer)
+        #     print(f"UnicodeDecodeError: {e}")
+        #     return None
+
 # 클라이언트 프로그램 시작
 while True:
     print("질문: ")
@@ -31,7 +67,7 @@ while True:
         # 챗봇 엔진 질의 요청
         json_data = {
             'Query': query,
-            'BotType': "Test",
+            # 'BotType': "Test",
         }
 
         message = json.dumps(json_data)
@@ -39,9 +75,14 @@ while True:
         print("질의 전송 완료")
 
         # 챗봇 엔진 답변 출력
-        data = mySocket.recv(2048).decode()
-        print("응답 수신 완료")
-        ret_data = json.loads(data)
+
+        # data = mySocket.recv(2048).decode()
+        # print("응답 수신 완료")
+        # ret_data = json.loads(data)
+
+        ret_data = receive_full_response(mySocket)
+        # print("응답 수신 완료")
+
         # try:
         #     ret_data = json.loads(data)
         # except json.decoder.JSONDecodeError as e:

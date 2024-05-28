@@ -74,21 +74,6 @@ class Response:
         else:
             filtered_data = filtered_data_primary
 
-        # 별점으로 내림차순 정렬
-        # filtered_data = filtered_data.sort_values(by='별점', ascending=False)
-        #
-        # # 별점이 3.8에서 4.2 사이인 데이터만 필터링
-        # rating_min = 3.8
-        # rating_max = 4.2
-        # filtered_data = filtered_data[(filtered_data['별점'] >= rating_min) & (filtered_data['별점'] <= rating_max)]
-        #
-        # # 필터링 결과가 없으면 메시지 반환
-        # if filtered_data.empty:
-        #     return "식당 정보를 찾을 수 없습니다."
-        #
-        # # 식당명과 별점을 튜플 형태로 리스트에 저장
-        # restaurant_info = filtered_data[['사업장명', '별점']].values.tolist()
-
         restaurant_info = filtered_data['사업장명'].tolist()
         return restaurant_info
 
@@ -123,21 +108,6 @@ class Response:
             filtered_data = filtered_data_secondary
         else:
             filtered_data = filtered_data_primary
-
-        # 별점으로 내림차순 정렬
-        # filtered_data = filtered_data.sort_values(by='별점', ascending=False)
-        #
-        # # 별점이 3.8에서 4.2 사이인 데이터만 필터링
-        # rating_min = 3.8
-        # rating_max = 4.2
-        # filtered_data = filtered_data[(filtered_data['별점'] >= rating_min) & (filtered_data['별점'] <= rating_max)]
-        #
-        # # 필터링 결과가 없으면 메시지 반환
-        # if filtered_data.empty:
-        #     return "카페 정보를 찾을 수 없습니다."
-        #
-        # # 카페명과 별점을 튜플 형태로 리스트에 저장
-        # cafe_info = filtered_data[['사업장명', '별점']].values.tolist()
 
         cafe_info = filtered_data['사업장명'].tolist()
         return cafe_info
@@ -175,15 +145,6 @@ class Response:
         tour_info = filtered_data['관광지명'].tolist()
         return tour_info
 
-    # def get_travel_info(location):
-    #     if isinstance(location, list):
-    #         if len(location) > 0:
-    #             location = location[-1]
-    #         else:
-    #             return "지역 정보가 비어있습니다."
-    #     elif location is None:
-    #         return "지역을 찾을 수 없습니다."
-
     def generate_response(self, user_intent, user_query):
         location = self.extracted_region(user_query)
         if location is None:
@@ -196,7 +157,7 @@ class Response:
             # restaurant_list가 빈 문자열이 아니거나 특정 조건을 만족하는 경우
             # if restaurant_list and not restaurant_list.startswith('None'):
             if restaurant_list:
-                response = f'{location}에 있는 음식점 정보\n{restaurant_list}'
+                response = f'{location}에 있는 식당 정보\n{restaurant_list}'
             else:
                 response = '해당 지역의 식당 정보를 검색할 수 없습니다.'
 
