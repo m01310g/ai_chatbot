@@ -1,7 +1,6 @@
 import pandas as pd
 import pyproj
 import numpy as np
-import folium
 
 # 좌표계 변환 함수 정의
 def project_array(coord, p1_type, p2_type):
@@ -19,7 +18,6 @@ def project_array(coord, p1_type, p2_type):
 
     return np.dstack([fx, fy])[0]
 
-# cafe_file = pd.read_csv('C:/Users/hello/Downloads/07_24_05_P_CSV/fulldata_07_24_05_P_휴게음식점.csv', encoding='cp949')
 restaurant_file1 = pd.read_csv('C:/Users/hello/Downloads/07_24_04_P_CSV/fulldata_07_24_04_P_일반음식점.csv', encoding='cp949')
 restaurant_file2 = pd.read_csv('C:/Users/hello/Downloads/07_24_01_P_CSV/fulldata_07_24_01_P_관광식당.csv', encoding='cp949')
 
@@ -61,13 +59,3 @@ region = restaurant_df['소재지전체주소'].apply(lambda x: x.split()[0:3])
 region = region.tolist()
 
 restaurant_df.to_csv('E:/ai_chatbot/변형데이터/RestaurantData.csv')
-
-# for i in range(len(region)):
-#     restaurant_df['시도'] = region[i][0]
-
-# print(restaurant_df['지역'])
-# for i in range(len(restaurant_df)):
-#     restaurant_df['시군구'] = region[i][1]
-
-# for i in range(len(region)):
-#     restaurant_df['읍면동'] = region[i][2]

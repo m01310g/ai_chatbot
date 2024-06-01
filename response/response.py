@@ -20,7 +20,10 @@ class Response:
 
         # 제외할 관련 키워드 리스트
         keywords = ['밥', '음식점', '식당', '맛집', '음식', '식사', '아침', '점심', '저녁', '밥집', '식사', '좀', '근처', '주변', '관광지', '관광',
-                    '명소', '카페', '커피', '케이크', '음료', '음료수', '추천', '계획', ]
+                    '명소', '카페', '커피', '케이크', '음료', '음료수', '추천', '계획', '박', '일','쇼핑', '백화점', '자연', '바다', '산', '산행',
+                    '강', '계곡', '해수욕장', '호수', '박물관', '도서관', '서점', '유적지', '고궁', '궁', '전통', '레저', '스노쿨링', '스키', '래프팅',
+                    '수영', '스카이다이빙', '낚시', '요트', '번지점프', '제트스키', '스노보드', '활동', '거', '것', '힐링', '타고', '해수욕', '정도',
+                    '대략', '약', '약간', '등산', '탈', '해', '겨', '개', '곳']
 
         # 지역명 추출
         extracted_regions = []
@@ -54,7 +57,7 @@ class Response:
             return "지역을 찾을 수 없습니다."
 
         data = pd.read_csv('E:/ai_chatbot/변형데이터/RestaurantData.csv',
-                           usecols=['사업장명', '소재지전체주소'])
+                           usecols=['사업장명', '소재지전체주소', '위도', '경도'])
 
         location_parts = location.split(' ')
         primary_location = location_parts[0]
@@ -74,8 +77,12 @@ class Response:
         else:
             filtered_data = filtered_data_primary
 
+        # 위도와 경도 정보를 추출하여 반환
+        latitude = filtered_data['위도'].tolist()
+        longitude = filtered_data['경도'].tolist()
+
         restaurant_info = filtered_data['사업장명'].tolist()
-        return restaurant_info
+        return {'restaurant_info': restaurant_info[1:3], 'latitude': latitude[1:3], 'longitude': longitude[1:3]}
 
     def get_cafe_info(self, location):
         # 리스트가 전달되었다면 첫 번째 항목을 사용
@@ -89,7 +96,7 @@ class Response:
             return "지역을 찾을 수 없습니다."
 
         data = pd.read_csv('E:/ai_chatbot/변형데이터/CafeData.csv',
-                           usecols=['사업장명', '소재지전체주소'])
+                           usecols=['사업장명', '소재지전체주소', '위도', '경도'])
 
         location_parts = location.split(' ')
         primary_location = location_parts[0]
@@ -109,8 +116,12 @@ class Response:
         else:
             filtered_data = filtered_data_primary
 
+        # 위도와 경도 정보를 추출하여 반환
+        latitude = filtered_data['위도'].tolist()
+        longitude = filtered_data['경도'].tolist()
+
         cafe_info = filtered_data['사업장명'].tolist()
-        return cafe_info
+        return {'cafe_info': cafe_info[1:3], 'latitude': latitude[1:3], 'longitude': longitude[1:3]}
 
     def get_tour_info(self, location):
         if isinstance(location, list):
@@ -122,7 +133,7 @@ class Response:
             return "지역을 찾을 수 없습니다."
 
         data = pd.read_csv('E:/ai_chatbot/변형데이터/전국관광지정보표준데이터.csv', encoding='cp949',
-                           usecols=['소재지지번주소', '관광지명'])
+                           usecols=['소재지지번주소', '관광지명', '위도', '경도'])
 
         location_parts = location.split(' ')
         primary_location = location_parts[0]
@@ -142,9 +153,13 @@ class Response:
         else:
             filtered_data = filtered_data_primary
 
-        tour_info = filtered_data['관광지명'].tolist()
-        return tour_info
+        # 위도와 경도 정보를 추출하여 반환
+        latitude = filtered_data['위도'].tolist()
+        longitude = filtered_data['경도'].tolist()
 
+        tour_info = filtered_data['관광지명'].tolist()
+        # 결과 반환 시 위도와 경도 정보도 함께 반환
+        return {'tour_info': tour_info[1:3], 'latitude': latitude[1:3], 'longitude': longitude[1:3]}
     def generate_response(self, user_intent, user_query):
         location = self.extracted_region(user_query)
         if location is None:
